@@ -1,13 +1,11 @@
 // from https://www.codementor.io/sambhavgore/an-example-use-context-and-hooks-to-share-state-between-different-components-sgop6lnrd
 // https://medium.com/@jaryd_34198/seamless-api-requests-with-react-hooks-part-1-7531849d8381
 import {
-  getConfigWithDefaultValues,
-  createDataReducer
+  createDataReducer,
+  fetchToSuccessOrFailData
 } from 'fetch-normalize-data'
 import PropTypes from "prop-types"
 import React, { createContext, useEffect, useReducer, useState } from "react"
-
-import { dataEffect } from './dataEffect'
 
 export const DataContext = createContext({})
 
@@ -28,10 +26,8 @@ export const Provider = props => {
       }
       setHasAlreadyRequested(true)
       useEffect(() => {
-        const effectConfig = getConfigWithDefaultValues(
-          Object.assign({}, config, action.config)
-        )
-        dataEffect(reducer, effectConfig)
+        const fetchConfig = Object.assign({}, config, action.config)
+        fetchToSuccessOrFailData(reducer, fetchConfig)
       }, [_dispatch])
     }
     _dispatch(action)

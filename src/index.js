@@ -1,2 +1,2 @@
-export * from './createDataContext'
-export * from './dataEffect'
+export * from './DataContext'
+export * from './withData'

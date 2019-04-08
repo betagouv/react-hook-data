@@ -1,9 +1,8 @@
 /* eslint-disable no-use-before-define */
 import 'babel-polyfill'
 import { mount } from 'enzyme'
-import PropTypes from 'prop-types'
 import { requestData } from 'fetch-normalize-data'
-
+import PropTypes from 'prop-types'
 import React, { Fragment, useContext } from 'react'
 import { act } from 'react-dom/test-utils'
 
@@ -16,23 +15,27 @@ const mockFoos = [
 
 jest.mock('fetch-normalize-data', () => {
   const actualModule = jest.requireActual('fetch-normalize-data')
+  const mockFetchData = (url, config) => {
+    if (url === 'https://momarx.com/failFoos') {
+      return {
+        payload: { errors: [] },
+        status: 400
+      }
+    }
+    if (url === 'https://momarx.com/successFoos') {
+      return {
+        payload: { data: mockFoos },
+        status: 200
+      }
+    }
+    return actualModule.fetchData(url, config)
+  }
   return {
     ...actualModule,
-    fetchData: (url, config) => {
-      if (url === 'https://momarx.com/failFoos') {
-        return {
-          payload: { errors: [] },
-          status: 400
-        }
-      }
-      if (url === 'https://momarx.com/successFoos') {
-        return {
-          payload: { data: mockFoos },
-          status: 200
-        }
-      }
-      return actualModule.fetchData(url, config)
-    }
+    fetchToSuccessOrFailData: (reducer, config) =>
+      actualModule.fetchToSuccessOrFailData(reducer,
+        Object.assign({}, config, { fetchData: mockFetchData})
+      )
   }
 })
 
