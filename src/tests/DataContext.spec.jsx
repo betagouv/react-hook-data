@@ -136,7 +136,7 @@ describe('DataContext with Foos basic usage', () => {
     })
 
     describe('request post with success', () => {
-      it('should render test component whith one more foo item', done => {
+      it.only('should render test component whith one more foo item', done => {
         // given
         const Foos = ({ handleExpectation }) => {
           const { data, dispatch } = useContext(DataContext)

@@ -28,7 +28,10 @@ export const Provider = props => {
           _dispatch(action)
           fetchToSuccessOrFailData(reducer, fetchConfig)
         }, [trigger])
-      } catch {
+      } catch (error) {
+        if (error.name !== 'Invariant Violation') {
+          throw Error(error)
+        }
         _dispatch(action)
         fetchToSuccessOrFailData(reducer, fetchConfig)
       }
