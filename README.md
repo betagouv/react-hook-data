@@ -1,18 +1,18 @@
-# react-hooks-data
+# react-hook-data
 
 A lib for fetching normalized data in components via react hooks.
 
-See the full [documentation](https://react-hooks-data.netlify.com) for further complex use cases with several collections of data.
+See the full [documentation](https://react-hook-data.netlify.com) for further complex use cases with several collections of data.
 
-[![CircleCI](https://circleci.com/gh/betagouv/react-hooks-data/tree/master.svg?style=svg)](https://circleci.com/gh/betagouv/react-hooks-data/tree/master)
-[![npm version](https://img.shields.io/npm/v/react-hooks-data.svg?style=flat-square)](https://npmjs.org/package/react-hooks-data)
+[![CircleCI](https://circleci.com/gh/betagouv/react-hook-data/tree/master.svg?style=svg)](https://circleci.com/gh/betagouv/react-hook-data/tree/master)
+[![npm version](https://img.shields.io/npm/v/react-hook-data.svg?style=flat-square)](https://npmjs.org/package/react-hook-data)
 
 ## Basic Usage
 
 Define your components as children of the `DataContext.Provider`:
 
 ```javascript
-import { DataContext } from 'react-hooks-data'
+import { DataContext } from 'react-hook-data'
 
 import Foos from './foos'
 
@@ -29,7 +29,7 @@ Where Foos will access to the data elements:
 
 ```javascript
 import React, { Fragment, useState } from 'react'
-import { DataContext } from 'react-hooks-data'
+import { DataContext } from 'react-hook-data'
 
 const Foos = () => {
   const { data, dispatch } = useContext(DataContext)
@@ -70,7 +70,7 @@ Just rewrite your foos component as a container-like one:
 And use the `withData` hoc in order to make it more react-redux-like:
 
 ```javascript
-import { withData } from 'react-hooks-data'
+import { withData } from 'react-hook-data'
 
 import Foos from './foos'
 

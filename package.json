@@ -54,11 +54,11 @@
   ],
   "license": "MIT",
   "main": "lib/index.js",
-  "name": "react-hooks-data",
+  "name": "react-hook-data",
   "private": false,
   "repository": {
     "type": "git",
-    "url": "https://github.com/betagouv/react-hooks-data"
+    "url": "https://github.com/betagouv/react-hook-data"
   },
   "scripts": {
     "compile": "rm -rf lib && babel --plugins transform-class-properties,transform-object-rest-spread --presets env,react -d lib/ src/",
