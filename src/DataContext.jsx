@@ -5,7 +5,7 @@ import {
   fetchToSuccessOrFailData
 } from 'fetch-normalize-data'
 import PropTypes from "prop-types"
-import React, { createContext, useEffect, useReducer, useState } from "react"
+import React, { createContext, useEffect, useReducer } from "react"
 
 export const DataContext = createContext({})
 
@@ -22,15 +22,14 @@ export const Provider = props => {
     if (/REQUEST_DATA_(DELETE|GET|POST|PUT|PATCH)_(.*)/.test(action.type)) {
       useEffect(() => {
         _dispatch(action)
-
         const fetchConfig = Object.assign({}, config, action.config)
         fetchToSuccessOrFailData(reducer, fetchConfig)
-      }, [_dispatch])
+      })
       return
     }
     useEffect(() => {
       _dispatch(action)
-    }, [_dispatch])
+    })
   }
 
   const value = {
