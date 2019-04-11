@@ -24,7 +24,7 @@ export const Provider = props => {
         _dispatch(action)
         const fetchConfig = Object.assign({}, config, action.config)
         fetchToSuccessOrFailData(reducer, fetchConfig)
-      })
+      }, [action.tag || action.type])
       return
     }
     useEffect(() => {
