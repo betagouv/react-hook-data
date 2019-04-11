@@ -23,6 +23,12 @@ jest.mock('fetch-normalize-data', () => {
       }
     }
     if (url === 'https://momarx.com/successFoos') {
+      if (config.method === 'POST' || config.method === 'PATCH') {
+        return {
+          payload: { datum: config.body },
+          status: 200
+        }
+      }
       return {
         payload: { data: mockFoos },
         status: 200
@@ -30,6 +36,7 @@ jest.mock('fetch-normalize-data', () => {
     }
     return actualModule.fetchData(url, config)
   }
+
   return {
     ...actualModule,
     fetchToSuccessOrFailData: (reducer, config) =>
@@ -40,8 +47,8 @@ jest.mock('fetch-normalize-data', () => {
 })
 
 describe('DataContext with Foos basic usage', () => {
-  describe('mount with DataContext', () => {
-    describe('request with success', () => {
+  describe('Provide DataContext', () => {
+    describe('request get with success', () => {
       it('should render test component whith foo items', done => {
         // given
         const Foos = ({ handleExpectation }) => {
@@ -85,19 +92,9 @@ describe('DataContext with Foos basic usage', () => {
       })
     })
 
-    describe('request with fail', () => {
+    describe('request get with fail', () => {
       it('should render test component whith no foo items', done => {
         // given
-        jest.mock('fetch-normalize-data', () => {
-          const actualModule = jest.requireActual('fetch-normalize-data')
-          return {
-            ...actualModule,
-            fetchData: () => ({
-              errors: [],
-              status: 400
-            })
-          }
-        })
         const Foos = ({ handleExpectation }) => {
           const { data, dispatch } = useContext(DataContext)
           const { foos } = data || {}
@@ -137,10 +134,73 @@ describe('DataContext with Foos basic usage', () => {
         }
       })
     })
+
+    describe('request post with success', () => {
+      it('should render test component whith one more foo item', done => {
+        // given
+        const Foos = ({ handleExpectation }) => {
+          const { data, dispatch } = useContext(DataContext)
+          const { foos } = data || {}
+
+          dispatch(requestData({
+            apiPath: '/successFoos',
+            effect: true,
+            stateKey: 'foos'
+          }))
+
+          if (foos && foos.length === 3) {
+            handleExpectation()
+          }
+
+          return (
+            <Fragment>
+              {(foos || []).map(foo => (
+                <div className="foo" key={foo.id}>
+                  {foo.text}
+                </div>
+              ))}
+              <button
+                onClick={() => {
+                  dispatch(requestData({
+                    apiPath: '/successFoos',
+                    body: { id: "CG", test: "My new foo", type: "good" },
+                    method: 'POST',
+                    noEffect: true,
+                    stateKey: 'foos',
+                  }))
+                }}
+                type="button"
+              >
+                Click
+              </button>
+            </Fragment>
+          )
+        }
+        Foos.propTypes = {
+          handleExpectation: PropTypes.func.isRequired
+        }
+
+        // when
+        act(() => {
+          const wrapper = mount(
+            <DataContext.Provider config={{ rootUrl: "https://momarx.com" }}>
+              <Foos handleExpectation={handleExpectation} />
+            </DataContext.Provider>
+          )
+          wrapper.find(Foos).find('button').simulate('click')
+        })
+
+        // then
+        function handleExpectation() {
+          done()
+        }
+      })
+    })
+
   })
 
   describe('mount with DataContext for several components', () => {
-    describe('request with success', () => {
+    describe('request get with success', () => {
       it('trigger success in other component than the one that did request', done => {
         // given
         const DispatcherFoos = () => {

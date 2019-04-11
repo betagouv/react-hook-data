@@ -20,11 +20,18 @@ export const Provider = props => {
 
   function dispatch (action) {
     if (/REQUEST_DATA_(DELETE|GET|POST|PUT|PATCH)_(.*)/.test(action.type)) {
+      const fetchConfig = Object.assign({}, config, action.config)
+      const { noEffect, tag } = (action.config || {})
+      if (noEffect) {
+        _dispatch(action)
+        fetchToSuccessOrFailData(reducer, fetchConfig)
+        return
+      }
+      const trigger = tag || action.type
       useEffect(() => {
         _dispatch(action)
-        const fetchConfig = Object.assign({}, config, action.config)
         fetchToSuccessOrFailData(reducer, fetchConfig)
-      }, [action.tag || action.type])
+      }, [trigger])
       return
     }
     useEffect(() => {
