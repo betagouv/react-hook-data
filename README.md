@@ -55,10 +55,6 @@ const Foos = () => {
     </Fragment>
   )
 }
-
-Foos.propTypes = {
-  handleExpectation: PropTypes.func.isRequired
-}
 ```
 
 ## Usage with withData
