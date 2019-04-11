@@ -13,7 +13,6 @@ const BaseProvider = DataContext.Provider
 
 export const Provider = props => {
   const { children, config, initialState } = props
-  const [hasAlreadyRequested, setHasAlreadyRequested] = useState(false)
 
   const dataReducer = createDataReducer(initialState)
   const reducer = useReducer(dataReducer, initialState)
@@ -21,16 +20,17 @@ export const Provider = props => {
 
   function dispatch (action) {
     if (/REQUEST_DATA_(DELETE|GET|POST|PUT|PATCH)_(.*)/.test(action.type)) {
-      if (hasAlreadyRequested) {
-        return
-      }
-      setHasAlreadyRequested(true)
       useEffect(() => {
+        _dispatch(action)
+
         const fetchConfig = Object.assign({}, config, action.config)
         fetchToSuccessOrFailData(reducer, fetchConfig)
       }, [_dispatch])
+      return
     }
-    _dispatch(action)
+    useEffect(() => {
+      _dispatch(action)
+    }, [_dispatch])
   }
 
   const value = {

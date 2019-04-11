@@ -1,12 +1,12 @@
 /* eslint-disable no-use-before-define */
 import 'babel-polyfill'
 import { mount } from 'enzyme'
-import { requestData } from 'fetch-normalize-data'
 import PropTypes from 'prop-types'
 import React, { Fragment, useContext } from 'react'
 import { act } from 'react-dom/test-utils'
 
 import { DataContext } from '../DataContext'
+import { requestData } from '../requestData'
 
 const mockFoos = [
   { id: "AE", text: "My foo is here", type: "good" },

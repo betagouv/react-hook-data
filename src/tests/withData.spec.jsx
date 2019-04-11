@@ -2,12 +2,11 @@
 import 'babel-polyfill'
 import { mount } from 'enzyme'
 import PropTypes from 'prop-types'
-import { requestData } from 'fetch-normalize-data'
-
 import React, { Fragment, useContext } from 'react'
 import { act } from 'react-dom/test-utils'
 
 import { DataContext } from '../DataContext'
+import { requestData } from '../requestData'
 import { withData } from '../withData'
 
 const mockFoos = [
