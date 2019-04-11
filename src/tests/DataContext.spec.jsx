@@ -165,7 +165,6 @@ describe('DataContext with Foos basic usage', () => {
                     apiPath: '/successFoos',
                     body: { id: "CG", test: "My new foo", type: "good" },
                     method: 'POST',
-                    noEffect: true,
                     stateKey: 'foos',
                   }))
                 }}
