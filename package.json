@@ -1,10 +1,11 @@
 {
   "dependencies": {
     "eslint": "^5.8.0",
-    "fetch-normalize-data": "1.2.0",
+    "fetch-normalize-data": "1.2.3",
     "prop-types": "^15.6.2",
     "uuid": "^3.3.2"
   },
+  "description": "A lib for fetching normalized data in components via react hooks.",
   "devDependencies": {
     "@babel/core": "^7.0.1",
     "@babel/plugin-proposal-class-properties": "^7.0.0",
@@ -52,7 +53,7 @@
     "reducer",
     "request"
   ],
-  "license": "Mozilla Public License",
+  "license": "MPL-2.0",
   "main": "lib/index.js",
   "name": "react-hook-data",
   "private": false,
@@ -69,5 +70,5 @@
     "test": "yarn jest --env=jsdom ./src",
     "watch": "nodemon --watch src --exec \"npm run compile\""
   },
-  "version": "1.6.0"
+  "version": "1.6.1"
 }

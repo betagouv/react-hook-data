@@ -1,4 +1,4 @@
-# react-hook-data
+<img alt="react-hook-data logo" src="https://raw.githubusercontent.com/betagouv/react-hook-data/master/icon.png" height=60/>
 
 A lib for fetching normalized data in components via react hooks.
 
