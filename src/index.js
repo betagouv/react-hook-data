@@ -37,4 +37,4 @@ export {
 }
 
 export * from './DataContext'
-export * from './withData'
+export { default as withData } from './withData'

@@ -12,7 +12,7 @@ const mockFoos = [
   { id: 'AE', text: 'My foo is here', type: 'good' },
   { id: 'BF', test: 'My other foo also', type: 'bad' },
 ]
-const postedMockFoo = { id: 'CG', test: 'My new foo', type: 'good' }
+const mockPostedFoo = { id: 'CG', test: 'My new foo', type: 'good' }
 
 jest.mock('fetch-normalize-data', () => {
   const actualModule = jest.requireActual('fetch-normalize-data')
@@ -52,7 +52,7 @@ const postFoo = dispatch => () =>
   dispatch(
     requestData({
       apiPath: '/successFoos',
-      body: postedMockFoo,
+      body: mockPostedFoo,
       method: 'POST',
       stateKey: 'foos',
     })
@@ -175,7 +175,7 @@ describe('when DataContext with Foos is for basic usage', () => {
     describe('when request post with success', () => {
       it('should render test component whith one more foo item', async done => {
         // given
-        const expectedFoos = [postedMockFoo, ...mockFoos].map(mockFoo => ({
+        const expectedFoos = [mockPostedFoo, ...mockFoos].map(mockFoo => ({
           ...mockFoo,
           __ACTIVITIES__: ['/successFoos'],
         }))

@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 
 import { DataContext } from './DataContext'
 
-export const withData = (
+const withData = (
   mapStateToProps,
   mapDispatchToProps
 ) => WrappedComponent => {

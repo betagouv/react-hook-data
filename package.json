@@ -63,7 +63,7 @@
     "precommit": "./precommit.sh",
     "prettier": "$(yarn bin)/prettier --write 'src/**/*.js'",
     "prepublish": "npm run compile",
-    "test": "yarn jest --env=jsdom",
+    "test": "yarn jest --env=jsdom ./src",
     "watch": "nodemon --watch src --exec \"npm run compile\""
   }
 }
