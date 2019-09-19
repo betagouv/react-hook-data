@@ -10,8 +10,8 @@ import { DataContext } from '../DataContext'
 import { withData } from '../withData'
 
 const mockFoos = [
-  { id: "AE", text: "My foo is here", type: "good" },
-  { id: "BF", test: "My other foo also", type: "bad" }
+  { id: 'AE', text: 'My foo is here', type: 'good' },
+  { id: 'BF', test: 'My other foo also', type: 'bad' },
 ]
 
 jest.mock('fetch-normalize-data', () => {
@@ -20,13 +20,13 @@ jest.mock('fetch-normalize-data', () => {
     if (url === 'https://momarx.com/failFoos') {
       return {
         errors: [],
-        status: 400
+        status: 400,
       }
     }
     if (url === 'https://momarx.com/successFoos') {
       return {
         data: mockFoos,
-        status: 200
+        status: 200,
       }
     }
     return actualModule.fetchData(url, config)
@@ -34,9 +34,10 @@ jest.mock('fetch-normalize-data', () => {
   return {
     ...actualModule,
     fetchToSuccessOrFailData: (reducer, config) =>
-      actualModule.fetchToSuccessOrFailData(reducer,
-        Object.assign({}, config, { fetchData: mockFetchData})
-      )
+      actualModule.fetchToSuccessOrFailData(
+        reducer,
+        Object.assign({}, config, { fetchData: mockFetchData })
+      ),
   }
 })
 
@@ -45,14 +46,16 @@ const Foos = ({
   dispatch,
   foos,
   handleFailGetExpectation,
-  handleSuccessGetExpectation
+  handleSuccessGetExpectation,
 }) => {
   if (apiPath) {
-    dispatch(requestData({
-      apiPath,
-      handleFail: handleFailGetExpectation,
-      stateKey: 'foos'
-    }))
+    dispatch(
+      requestData({
+        apiPath,
+        handleFail: handleFailGetExpectation,
+        stateKey: 'foos',
+      })
+    )
   }
 
   if (foos && foos.length === 1) {
@@ -77,18 +80,18 @@ Foos.defaultProps = {
   apiPath: null,
   foos: null,
   handleFailGetExpectation: () => {},
-  handleSuccessGetExpectation: () => {}
+  handleSuccessGetExpectation: () => {},
 }
 Foos.propTypes = {
   apiPath: PropTypes.string,
   dispatch: PropTypes.func.isRequired,
   foos: PropTypes.arrayOf(PropTypes.shape()),
   handleFailGetExpectation: PropTypes.func,
-  handleSuccessGetExpectation: PropTypes.func
+  handleSuccessGetExpectation: PropTypes.func,
 }
 
 const mapDataToProps = (data, props) => ({
-  foos: (data.foos || []).filter(foo => foo.type === props.type)
+  foos: (data.foos || []).filter(foo => foo.type === props.type),
 })
 const FoosContainer = withData(mapDataToProps)(Foos)
 
@@ -98,16 +101,16 @@ describe('when useData with Foos basic usage', () => {
       it('should render test component whith foo items', async done => {
         // given
         const expectedFoos = mockFoos
-        .filter(mockFoo => mockFoo.type === 'good')
-        .map(mockFoo => ({
-          ...mockFoo,
-          __ACTIVITIES__: ['/successFoos'],
-        }))
+          .filter(mockFoo => mockFoo.type === 'good')
+          .map(mockFoo => ({
+            ...mockFoo,
+            __ACTIVITIES__: ['/successFoos'],
+          }))
 
         // when
         await act(async () => {
           mount(
-            <DataContext.Provider config={{ rootUrl: "https://momarx.com" }}>
+            <DataContext.Provider config={{ rootUrl: 'https://momarx.com' }}>
               <FoosContainer
                 apiPath="/successFoos"
                 handleSuccessGetExpectation={handleExpectation}
@@ -122,7 +125,6 @@ describe('when useData with Foos basic usage', () => {
           expect(foos).toStrictEqual(expectedFoos)
           done()
         }
-
       })
     })
 
@@ -131,7 +133,7 @@ describe('when useData with Foos basic usage', () => {
         // when
         await act(async () => {
           mount(
-            <DataContext.Provider config={{ rootUrl: "https://momarx.com" }}>
+            <DataContext.Provider config={{ rootUrl: 'https://momarx.com' }}>
               <FoosContainer
                 apiPath="/failFoos"
                 handleFailGetExpectation={handleExpectation}
@@ -157,17 +159,17 @@ describe('when useData with Foos basic usage', () => {
       it('should trigger success in other component than the one that did request', async done => {
         // given
         const expectedFoos = mockFoos
-        .filter(mockFoo => mockFoo.type === 'good')
-        .map(mockFoo => ({
-          ...mockFoo,
-          __ACTIVITIES__: ['/successFoos'],
-        }))
+          .filter(mockFoo => mockFoo.type === 'good')
+          .map(mockFoo => ({
+            ...mockFoo,
+            __ACTIVITIES__: ['/successFoos'],
+          }))
 
         // when
         await act(async () => {
           mount(
             <Fragment>
-              <DataContext.Provider config={{ rootUrl: "https://momarx.com" }}>
+              <DataContext.Provider config={{ rootUrl: 'https://momarx.com' }}>
                 <FoosContainer apiPath="/successFoos" />
                 <FoosContainer
                   handleSuccessGetExpectation={handleExpectation}

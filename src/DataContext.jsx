@@ -2,10 +2,10 @@
 // https://medium.com/@jaryd_34198/seamless-api-requests-with-react-hooks-part-1-7531849d8381
 import {
   createDataReducer,
-  fetchToSuccessOrFailData
+  fetchToSuccessOrFailData,
 } from 'fetch-normalize-data'
-import PropTypes from "prop-types"
-import React, { createContext, useEffect, useReducer } from "react"
+import PropTypes from 'prop-types'
+import React, { createContext, useEffect, useReducer } from 'react'
 
 export const DataContext = createContext({})
 
@@ -18,10 +18,10 @@ export const Provider = props => {
   const reducer = useReducer(dataReducer, initialState)
   const [data, _dispatch] = reducer
 
-  function dispatch (action) {
+  function dispatch(action) {
     if (/REQUEST_DATA_(DELETE|GET|POST|PUT|PATCH)_(.*)/.test(action.type)) {
       const fetchConfig = Object.assign({}, config, action.config)
-      const { tag } = (action.config || {})
+      const { tag } = action.config || {}
       try {
         const trigger = tag || action.type
         useEffect(() => {
@@ -44,26 +44,22 @@ export const Provider = props => {
 
   const value = {
     data,
-    dispatch
+    dispatch,
   }
 
-  return (
-    <BaseProvider value={value}>
-      {children}
-    </BaseProvider>
-  )
+  return <BaseProvider value={value}>{children}</BaseProvider>
 }
 
 Provider.propTypes = {
   children: PropTypes.node,
   config: PropTypes.shape(),
-  initialState: PropTypes.shape()
+  initialState: PropTypes.shape(),
 }
 
 Provider.defaultProps = {
   children: null,
   config: null,
-  initialState: {}
+  initialState: {},
 }
 
 DataContext.Provider = Provider

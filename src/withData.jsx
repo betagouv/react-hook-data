@@ -2,7 +2,10 @@ import React, { useContext } from 'react'
 
 import { DataContext } from './DataContext'
 
-export const withData = (mapStateToProps, mapDispatchToProps) => WrappedComponent => {
+export const withData = (
+  mapStateToProps,
+  mapDispatchToProps
+) => WrappedComponent => {
   const Mapper = props => {
     const { data, dispatch } = useContext(DataContext)
 
@@ -18,13 +21,11 @@ export const withData = (mapStateToProps, mapDispatchToProps) => WrappedComponen
       dispatchProps = { dispatch }
     }
 
-    return (
-      <WrappedComponent
-        {...props}
-        {...stateProps}
-        {...dispatchProps}
-      />
-    )
+    return (<WrappedComponent
+      {...props}
+      {...stateProps}
+      {...dispatchProps}
+            />)
   }
   return Mapper
 }
