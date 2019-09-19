@@ -11,6 +11,7 @@ import {
   getNormalizedDeletedState,
   getNormalizedMergedState,
   mergeData,
+  requestData,
   resetData,
   setData,
 } from 'fetch-normalize-data'
@@ -28,6 +29,7 @@ export {
   getNormalizedDeletedState,
   getNormalizedMergedState,
   mergeData,
+  requestData,
   resetData,
   setData,
 }
