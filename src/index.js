@@ -12,8 +12,6 @@ import {
   getNormalizedMergedState,
   mergeData,
   resetData,
-  selectEntitiesByKeyAndJoin,
-  selectEntityByKeyAndId,
   setData,
 } from 'fetch-normalize-data'
 
@@ -31,10 +29,9 @@ export {
   getNormalizedMergedState,
   mergeData,
   resetData,
-  selectEntitiesByKeyAndJoin,
-  selectEntityByKeyAndId,
   setData,
 }
 
 export * from './DataContext'
+export * from './selectors'
 export { default as withData } from './withData'

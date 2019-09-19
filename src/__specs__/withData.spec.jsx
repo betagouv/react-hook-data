@@ -43,19 +43,13 @@ jest.mock('fetch-normalize-data', () => {
 
 const Foos = ({
   apiPath,
-  dispatch,
   foos,
   handleFailGetExpectation,
   handleSuccessGetExpectation,
+  requestGetFoos,
 }) => {
   if (apiPath) {
-    dispatch(
-      requestData({
-        apiPath,
-        handleFail: handleFailGetExpectation,
-        stateKey: 'foos',
-      })
-    )
+    requestGetFoos(handleFailGetExpectation)
   }
 
   if (foos && foos.length === 1) {
@@ -84,16 +78,26 @@ Foos.defaultProps = {
 }
 Foos.propTypes = {
   apiPath: PropTypes.string,
-  dispatch: PropTypes.func.isRequired,
   foos: PropTypes.arrayOf(PropTypes.shape()),
   handleFailGetExpectation: PropTypes.func,
   handleSuccessGetExpectation: PropTypes.func,
+  requestGetFoos: PropTypes.func.isRequired
 }
 
 const mapDataToProps = (data, props) => ({
   foos: (data.foos || []).filter(foo => foo.type === props.type),
 })
-const FoosContainer = withData(mapDataToProps)(Foos)
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  requestGetFoos: handleFailGetExpectation => dispatch(
+    requestData({
+      apiPath: ownProps.apiPath,
+      handleFail: handleFailGetExpectation,
+      stateKey: 'foos',
+    })
+  )
+})
+const FoosContainer = withData(mapDataToProps, mapDispatchToProps)(Foos)
 
 describe('when useData with Foos basic usage', () => {
   describe('when mount with DataContext', () => {
