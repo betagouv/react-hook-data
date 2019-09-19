@@ -1,6 +1,6 @@
-import { selectEntityByKeyAndId as _selectEntityByKeyAndId } from 'fetch-normalize-data'
+import { selectEntitiesByKeyAndJoin as _selectEntitiesByKeyAndJoin } from 'fetch-normalize-data'
 
-const selectEntityByKeyAndId = (data, ...args) =>
-  _selectEntityByKeyAndId({ data }, ...args)
+const selectEntitiesByKeyAndJoin = (data, ...args) =>
+  _selectEntitiesByKeyAndJoin({ data }, ...args)
 
-export default selectEntityByKeyAndId
+export default selectEntitiesByKeyAndJoin
