@@ -58,11 +58,12 @@
   },
   "scripts": {
     "compile": "rm -rf lib && babel --plugins transform-class-properties,transform-object-rest-spread --presets env,react -d lib/ src/",
+    "format:js": "prettier-eslint --write './src/**/*.{js,jsx}'",
     "postinstall": "if [ -d \"src/\" ]; then npm run compile; fi",
     "precommit": "./precommit.sh",
     "prettier": "$(yarn bin)/prettier --write 'src/**/*.js'",
     "prepublish": "npm run compile",
-    "test": "yarn jest --env=jsdom ./src",
+    "test": "yarn jest --env=jsdom",
     "watch": "nodemon --watch src --exec \"npm run compile\""
   }
 }
