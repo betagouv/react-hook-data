@@ -6,7 +6,7 @@
   "license": "MPL-2.0",
   "main": "lib/index.js",
   "dependencies": {
-    "fetch-normalize-data": "1.4.1",
+    "fetch-normalize-data": "1.8.2",
     "prop-types": "^15.6.2",
     "react": "^16.9.0",
     "uuid": "^3.3.2"
